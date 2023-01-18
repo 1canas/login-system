@@ -3,9 +3,9 @@ import { userController } from "../controllers/userController";
 
 const userRoutes = Router();
 
-userRoutes.post('/regiterUser', userController.removeUser);
-userRoutes.put('/updateUser', userController.updateUser);
-userRoutes.get('/getUser/:id', userController.getUser);
-userRoutes.delete('/removeUser/:id', userController.removeUser);
+userRoutes.post('/register', userController.register);
+userRoutes.put('/update',  userController.update);
+userRoutes.delete('/remove/:id',  userController.remove);
+userRoutes.get('/:id', userController.get);
 
 export default userRoutes;

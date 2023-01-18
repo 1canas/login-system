@@ -7,6 +7,6 @@ router.get('/', (req, res) => {
     res.send('oimonoite')
 });
 
-router.use(userRoutes);
+router.use('/user', userRoutes);
 
 export default router;
