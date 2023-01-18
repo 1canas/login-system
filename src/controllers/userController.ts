@@ -1,5 +1,4 @@
-import { Response, Request } from "express";
-import mongoose from "mongoose";
+import { Response, Request, NextFunction } from "express";
 import { User } from "../models/User";
 
 import bcrypt from "bcrypt";
@@ -91,7 +90,7 @@ async function get(req: Request, res: Response) {
     });
   }
 
-  const findedUser = await User.findById(id, '-password');
+  const findedUser = await User.findById(id, "-password");
 
   if (!findedUser) {
     return res.status(204).json({
@@ -104,8 +103,49 @@ async function get(req: Request, res: Response) {
   return res.status(200).json({
     statusCode: 200,
     user: findedUser,
-    timestamp: dateObject.getTime()
+    timestamp: dateObject.getTime(),
   });
+}
+
+export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  const dateObject = new Date();
+
+  const authHeaders = req.headers["authorization"];
+
+  if (!authHeaders) {
+    return res.status(204).json({
+      statusCode: 204,
+      message: "authorizarion token expected",
+      timestamp: dateObject.getTime(),
+    });
+  }
+
+  const token = authHeaders.split(' ')[1];
+
+  if (!token) {
+    return res.status(201).json({
+      statusCode: 201,
+      message: "Not authorized",
+      timestamp: dateObject.getTime(),
+    });
+  }
+
+  try {
+    const secret = process.env.SECRET;
+
+    await jwt.verify(token, secret);
+
+    next();
+  
+} catch (error) {
+    console.log(error);
+
+    return res.status(400).json({
+        statusCode: 400,
+        message: "Invalid token",
+        timestamp: dateObject.getTime(),
+      });
+  }
 }
 
 function remove(req: Request, res: Response) {
