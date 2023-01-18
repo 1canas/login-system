@@ -3,6 +3,8 @@ import { User } from "../models/User";
 
 import bcrypt from "bcrypt";
 
+import jwt from "jsonwebtoken";
+
 async function register(req: Request, res: Response) {
   const dateObject = new Date();
 
@@ -36,7 +38,7 @@ async function register(req: Request, res: Response) {
     return res.status(422).json({
       statusCode: 422,
       message: "Password and confirm password must be equals",
-      timestamp: dateObject.getDate(),
+      timestamp: dateObject.getTime(),
     });
   }
 
@@ -90,9 +92,9 @@ async function get(req: Request, res: Response) {
     });
   }
 
-  const findedUser = await User.findById(id, "-password");
+  const user = await User.findById(id, "-password");
 
-  if (!findedUser) {
+  if (!user) {
     return res.status(204).json({
       statusCode: 204,
       message: "User not found",
@@ -102,25 +104,29 @@ async function get(req: Request, res: Response) {
 
   return res.status(200).json({
     statusCode: 200,
-    user: findedUser,
+    user: user,
     timestamp: dateObject.getTime(),
   });
 }
 
-export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
+export function authMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const dateObject = new Date();
 
   const authHeaders = req.headers["authorization"];
 
   if (!authHeaders) {
-    return res.status(204).json({
-      statusCode: 204,
-      message: "authorizarion token expected",
+    return res.status(422).json({
+      statusCode: 422,
+      message: "authorization token expected",
       timestamp: dateObject.getTime(),
     });
   }
 
-  const token = authHeaders.split(' ')[1];
+  const token = authHeaders.split(" ")[1];
 
   if (!token) {
     return res.status(201).json({
@@ -131,20 +137,19 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
   }
 
   try {
-    const secret = process.env.SECRET;
+    const secret = process.env.SECRET ?? "";
 
-    await jwt.verify(token, secret);
+    jwt.verify(token, secret);
 
     next();
-  
-} catch (error) {
+  } catch (error) {
     console.log(error);
 
-    return res.status(400).json({
-        statusCode: 400,
-        message: "Invalid token",
-        timestamp: dateObject.getTime(),
-      });
+    return res.status(401).json({
+      statusCode: 401,
+      message: "Invalid token",
+      timestamp: dateObject.getTime(),
+    });
   }
 }
 
