@@ -153,8 +153,63 @@ export function authMiddleware(
   }
 }
 
-function remove(req: Request, res: Response) {
-  return res.status(401).send("não impl");
+async function remove(req: Request, res: Response) {
+  const dateObject = new Date();
+  
+  const { id, password } = req.body;
+
+  if (!id) {
+    return res.status(422).json({
+      statusCode: 422,
+      message: "User ID expected",
+      timestamp: dateObject.getTime(),
+    });
+  }
+
+  if (!password) {
+    return res.status(422).json({
+      statusCode: 422,
+      message: "Password expected",
+      timestamp: dateObject.getTime(),
+    });
+  }
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(204).json({
+      statusCode: 204,
+      message: "User not found",
+      timestamp: dateObject.getTime(),
+    });
+  }
+
+  const matchedPassword = await bcrypt.compare(password, user.password);
+  if (!matchedPassword) {
+    return res.status(403).json({
+      statusCode: 403,
+      message: "Incorrect password",
+      timestamp: dateObject.getTime(),
+    });
+  }
+
+  try {
+    User.findByIdAndRemove(id);
+
+    res.status(200).json({
+      statusCode: 200,
+      message: "User deleted successfully",
+      userId: id,
+      timestamp: dateObject.getTime()
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      statusCode: 500,
+      message: "Server internal error",
+      timestamp: dateObject.getTime(),
+    });
+  }
 }
 
 function update(req: Request, res: Response) {
