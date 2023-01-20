@@ -1,82 +1,68 @@
 import { Response, Request, NextFunction } from "express";
 import { User } from "../models/User";
 
+import { UserService } from "../services/userService";
+import { userValidator } from "./validators/UserValidator";
+
 import bcrypt from "bcrypt";
 
 import jwt from "jsonwebtoken";
 
-async function register(req: Request, res: Response) {
-  const dateObject = new Date();
+export default class UserController {
+  private userService: UserService;
 
-  const { name, email, password, confirmPassword } = req.body;
-
-  if (!name) {
-    return res.status(422).json({
-      statusCode: 422,
-      message: "Expected 'name' field",
-      timestamp: dateObject.getTime(),
-    });
+  constructor() {
+    this.userService = new UserService();
   }
+  
+  async register(req: Request, res: Response) {
+    const dateObject = new Date();
+    const { name, email, password, confirmPassword } = req.body;
 
-  if (!email) {
-    return res.status(422).json({
-      statusCode: 422,
-      message: "Expected 'email' field",
-      timestamp: dateObject.getTime(),
-    });
-  }
-
-  if (!password) {
-    return res.status(422).json({
-      statusCode: 422,
-      message: "Expected 'passwword' field",
-      timestamp: dateObject.getTime(),
-    });
-  }
-
-  if (password !== confirmPassword) {
-    return res.status(422).json({
-      statusCode: 422,
-      message: "Password and confirm password must be equals",
-      timestamp: dateObject.getTime(),
-    });
-  }
-
-  const matchedUser = await User.findOne({ email });
-
-  if (matchedUser) {
-    return res.status(422).json({
-      statusCode: 422,
-      message: "User already exists",
-      timestamp: dateObject.getTime(),
-    });
-  }
-
-  const salt = await bcrypt.genSalt(11);
-  const saltedPassword = await bcrypt.hash(password, salt);
-
-  try {
-    const user = new User({
-      email,
+    const registerInputValidation = userValidator.validateRegisterInput({
       name,
-      password: saltedPassword,
+      email,
+      password,
+      confirmPassword,
     });
 
-    const { _id } = await user.save();
+    if (!registerInputValidation.validate) {
+      return res.status(422).json({
+        statusCode: 422,
+        message: registerInputValidation.message,
+        timestamp: dateObject.getTime(),
+      });
+    }
 
-    return res.status(201).json({
-      statusCode: 201,
-      message: "User registered successfully",
-      id: _id,
-      timestamp: dateObject.getTime(),
-    });
-  } catch (error) {
-    console.log(error);
+    const alreadyExistUserValidation =
+      await userValidator.verifyUserAlreadyExist(email);
 
-    return res.status(500).json({
-      message: "Server internal error",
-      timestamp: dateObject.getTime(),
-    });
+    if (!alreadyExistUserValidation.validate) {
+      return res.status(422).json({
+        statusCode: 422,
+        message: alreadyExistUserValidation.message,
+        timestamp: dateObject.getTime(),
+      });
+    }
+
+    try {
+      const _id = this.userService.saveUser({ name, email, password });
+
+      return res.status(201).json({
+        statusCode: 201,
+        message: "User registered successfully",
+        id: _id,
+        timestamp: dateObject.getTime(),
+      });
+
+    } catch (error) {
+      console.log(error);
+
+      return res.status(500).json({
+        message: "Server internal error",
+        timestamp: dateObject.getTime(),
+      });
+    }
   }
 }
 
@@ -109,53 +95,9 @@ async function get(req: Request, res: Response) {
   });
 }
 
-export function authMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const dateObject = new Date();
-
-  const authHeaders = req.headers["authorization"];
-
-  if (!authHeaders) {
-    return res.status(422).json({
-      statusCode: 422,
-      message: "authorization token expected",
-      timestamp: dateObject.getTime(),
-    });
-  }
-
-  const token = authHeaders.split(" ")[1];
-
-  if (!token) {
-    return res.status(201).json({
-      statusCode: 201,
-      message: "Not authorized",
-      timestamp: dateObject.getTime(),
-    });
-  }
-
-  try {
-    const secret = process.env.SECRET ?? "";
-
-    jwt.verify(token, secret);
-
-    next();
-  } catch (error) {
-    console.log(error);
-
-    return res.status(401).json({
-      statusCode: 401,
-      message: "Invalid token",
-      timestamp: dateObject.getTime(),
-    });
-  }
-}
-
 async function remove(req: Request, res: Response) {
   const dateObject = new Date();
-  
+
   const { id, password } = req.body;
 
   if (!id) {
@@ -200,9 +142,8 @@ async function remove(req: Request, res: Response) {
       statusCode: 200,
       message: "User deleted successfully",
       userId: id,
-      timestamp: dateObject.getTime()
+      timestamp: dateObject.getTime(),
     });
-
   } catch (error) {
     return res.status(500).json({
       statusCode: 500,
@@ -217,7 +158,6 @@ function update(req: Request, res: Response) {
 }
 
 export const userController = {
-  register,
   get,
   remove,
   update,
