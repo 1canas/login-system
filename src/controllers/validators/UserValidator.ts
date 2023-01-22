@@ -1,4 +1,4 @@
-import { User } from "../../models/User";
+import { User } from "../../infra/repositories/mongoDB/models/User";
 
 type bodyPayload = {
   name?: string;

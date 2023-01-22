@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import { User } from "../models/User";
+import { User } from "../infra/repositories/mongoDB/models/User";
 
 import { UserService } from "../services/userService";
 import { userValidator } from "./validators/UserValidator";

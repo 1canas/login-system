@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../models/User";
+import { User } from "../infra/repositories/mongoDB/models/User";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

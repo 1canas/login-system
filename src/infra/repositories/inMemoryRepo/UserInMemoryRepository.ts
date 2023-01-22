@@ -1,5 +1,5 @@
-import User from "../../entities/User";
-import IUserRepository from "./UserRepositoryInterface";
+import User from "../../../entities/User";
+import IUserRepository from "../IUserRepository";
 
 export default class UserInMemoryRepository implements IUserRepository {
     userList: User[] = []
