@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import RegisterUserUseCase from "../../../useCases/RegisterUser/RegisterUserUseCase";
+import RegisterUserUseCase from "../../../useCases/registerUser/RegisterUserUseCase";
 import { RegisterUserController } from "../../presentation/controllers/RegisterUserController.";
 import UserInMemoryRepository from "../../repositories/inMemoryRepo/UserInMemoryRepository";
 import { NodemailerProvider } from "../../providers/nodemailer/NodemailerProvider";

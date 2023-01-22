@@ -1,4 +1,4 @@
-import RegisterUserUseCase from "../../../useCases/RegisterUser/RegisterUserUseCase";
+import RegisterUserUseCase from "../../../useCases/registerUser/RegisterUserUseCase";
 import { Request, Response } from "express";
 
 export class RegisterUserController {
@@ -12,12 +12,13 @@ export class RegisterUserController {
     const { name, email, password } = req.body;
 
     try {
-      await this.registerUserUseCase.execute({ name, email, password });
+      const { id } = await this.registerUserUseCase.execute({ name, email, password });
 
       return res.status(201).json({
         statusCode: 201,
         message: "User created successfully",
         timestamp: dateObject.getTime(),
+        id
       });
     } catch (err) {
       console.log(err);

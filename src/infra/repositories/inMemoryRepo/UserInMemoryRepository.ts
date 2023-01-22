@@ -8,8 +8,8 @@ export default class UserInMemoryRepository implements IUserRepository {
         await this.userList.push(user);
     }
     
-    async getById(id: string): Promise<User> {
-        throw new Error("Method not implemented.");
+    async getById(id: string): Promise<User | undefined> {
+        return await this.userList.find(user => user.id === id);
     }
     
     async getByEmail(email: string): Promise<User | undefined> {
