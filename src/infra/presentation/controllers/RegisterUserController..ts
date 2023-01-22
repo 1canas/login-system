@@ -1,0 +1,32 @@
+import RegisterUserUseCase from "../../../useCases/RegisterUser/RegisterUserUseCase";
+import { Request, Response } from "express";
+
+export class RegisterUserController {
+  constructor(private registerUserUseCase: RegisterUserUseCase) {}
+
+  async handle(req: Request, res: Response): Promise<Response> {
+    const dateObject = new Date();
+
+    console.log(this.registerUserUseCase)
+
+    const { name, email, password } = req.body;
+
+    try {
+      await this.registerUserUseCase.execute({ name, email, password });
+
+      return res.status(201).json({
+        statusCode: 201,
+        message: "User created successfully",
+        timestamp: dateObject.getTime(),
+      });
+    } catch (err) {
+      console.log(err);
+     
+      return res.status(500).json({
+        statusCode: 500,
+        message: "Server internal error",
+        timestamp: dateObject.getTime(),
+      });
+    }
+  }
+}

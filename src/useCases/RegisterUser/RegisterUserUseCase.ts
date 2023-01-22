@@ -11,7 +11,7 @@ export type RegisterUserOutput = {
     password: string
 }
 
-export default class RegisterUser {
+export default class RegisterUserUseCase {
     constructor(
         private userRepo: IUserRepository,
         private mailProvider: IMailProvider
@@ -38,7 +38,7 @@ export default class RegisterUser {
                 address: 'welcome@teste.com'
             },
             subject: "Welcome",
-            body: "<span>Welcome to our login sistem example"
+            body: `<span>Welcome to our login sistem example: ${user.name}`
         })
 
         return user.toObject();
