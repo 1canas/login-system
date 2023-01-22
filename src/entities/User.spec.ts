@@ -11,7 +11,7 @@ describe("User tests", () => {
     const user = new User(userProps);
 
     expect(user.id).toBeDefined();
-    expect(user.props).toStrictEqual(userProps);
+    expect({name: user.name, email: user.email, password: user.password}).toStrictEqual(userProps);
   });
 
   test("update name", () => {
@@ -24,7 +24,7 @@ describe("User tests", () => {
     const user = new User(userProps);
 
     expect(user.id).toBeDefined();
-    expect(user.props).toStrictEqual(userProps);
+    expect({name: user.name, email: user.email, password: user.password}).toStrictEqual(userProps);
 
     const newName = "newName@teste.com";
     user.updateName(newName);
@@ -42,7 +42,7 @@ describe("User tests", () => {
     const user = new User(userProps);
 
     expect(user.id).toBeDefined();
-    expect(user.props).toStrictEqual(userProps);
+    expect({name: user.name, email: user.email, password: user.password}).toStrictEqual(userProps);
 
     const newMail = "newMail@teste.com";
     user.updateEmail(newMail);
@@ -62,7 +62,7 @@ describe("User tests", () => {
     const newPassword = "teste302010";
 
     expect(user.id).toBeDefined();
-    expect(user.props).toStrictEqual(userProps);
+    expect({name: user.name, email: user.email, password: user.password}).toStrictEqual(userProps);
 
     user.updatePassword(newPassword);
 
@@ -79,10 +79,10 @@ describe("User tests", () => {
     const user = new User(userProps);
 
     expect(user.id).toBeDefined();
-    expect(user.props).toStrictEqual(userProps);
+    expect({name: user.name, email: user.email, password: user.password}).toStrictEqual(userProps);
 
-    const userObject = user.toJSON();
+    const userObject = user.toObject();
 
-    expect(userObject).toBe(JSON.stringify({ ...user.props, id: user.id }));
+    expect(userObject).toStrictEqual({ name: user.name, email: user.email, password: user.password, id: user.id });
   });
 });

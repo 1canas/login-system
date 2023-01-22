@@ -8,35 +8,17 @@ export type UserProps = {
 
 export default class User {
   public readonly id: string;
-  public props: Required<UserProps>
+
+  public name: string;
+  public email: string;
+  public password: string;
 
   constructor(props: UserProps, id?: string) {
     this.id = id ?? crypto.randomUUID();
-    this.props = props;
-  }
-
-  private set name(value: string) {
-    this.props.name = value;
-  }
-  
-  public get name() {
-    return this.props.name;
-  }
-
-  private set email(value: string) {
-    this.props.email = value;
-  }
-
-  public get email() {
-    return this.props.email;
-  }
-
-  private set password(value: string) {
-    this.props.password = value;
-  }
-  
-  public get password() {
-    return this.props.password;
+    
+    this.name = props.name;
+    this.email = props.email;
+    this.password = props.password;
   }
 
   updateName(name: string) {
@@ -51,10 +33,12 @@ export default class User {
     this.password = password;
   }
 
-  toJSON() {
-    return JSON.stringify({
-      ...this.props,
-      id: this.id
-    })
+  toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      password: this.password
+    }
   }
 }

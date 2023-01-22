@@ -32,7 +32,7 @@ export default class RegisterUser {
 
         await this.userRepo.save(user);
 
-        return JSON.parse(user.toJSON());
+        return user.toObject();
     }
 
     public async checkEmailExistence(email: string): Promise<boolean> {
