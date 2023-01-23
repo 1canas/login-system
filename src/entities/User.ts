@@ -14,7 +14,7 @@ export default class User {
   public password: string;
 
   constructor(props: UserProps, id?: string) {
-    this.id = id ?? crypto.randomUUID();
+    this.id = id || crypto.randomUUID();
     
     this.name = props.name;
     this.email = props.email;

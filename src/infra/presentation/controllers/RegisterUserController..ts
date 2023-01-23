@@ -7,8 +7,6 @@ export class RegisterUserController {
   async handle(req: Request, res: Response): Promise<Response> {
     const dateObject = new Date();
 
-    console.log(this.registerUserUseCase)
-
     const { name, email, password } = req.body;
 
     try {

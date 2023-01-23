@@ -1,37 +1,47 @@
 import { Router } from "express";
 
-import RegisterUserUseCase from "../../../useCases/registerUser/RegisterUserUseCase";
-import { RegisterUserController } from "../../presentation/controllers/RegisterUserController.";
 import UserInMemoryRepository from "../../repositories/inMemoryRepo/UserInMemoryRepository";
 import { NodemailerProvider } from "../../providers/nodemailer/NodemailerProvider";
 
+import RegisterUserUseCase from "../../../useCases/registerUser/RegisterUserUseCase";
+import { RegisterUserController } from "../../presentation/controllers/RegisterUserController.";
+
+import GetUserUseCase from "../../../useCases/getUser/GetUserUseCase";
+import { GetUserController } from "../../presentation/controllers/GetUserController";
+
+import RemoveUserUseCase from "../../../useCases/removeUser/RemoveUserUseCase";
+import { RemoveUserController } from "../../presentation/controllers/RemoveUserController";
+
+import UpdateUserUseCase from "../../../useCases/updateUser/UpdateUserUseCase";
+import { UpdateUserController } from "../../presentation/controllers/UpdateUserController";
+
 export class UserRoutes {
   private registerUserController: RegisterUserController;
+  private getUserController: GetUserController;
+  private updateUserController: UpdateUserController;
+  private removeUserController: RemoveUserController;
 
   constructor(private router: Router) {
     const userRepo = new UserInMemoryRepository();
     const mailProvider = new NodemailerProvider();
+
     const registerUserUseCase = new RegisterUserUseCase(userRepo, mailProvider);
+    const getUserUseCase = new GetUserUseCase(userRepo);
+    const updateUserUseCase = new UpdateUserUseCase(userRepo);
+    const removeUserUseCase = new RemoveUserUseCase(userRepo);
 
     this.registerUserController = new RegisterUserController(registerUserUseCase);
+    this.getUserController = new GetUserController(getUserUseCase);
+    this.updateUserController = new UpdateUserController(updateUserUseCase);
+    this.removeUserController = new RemoveUserController(removeUserUseCase);
   }
 
   initRoutes(): Router{
     this.router.post("/register", (req, res) => this.registerUserController.handle(req, res));
+    this.router.get("/:id", (req, res) => this.getUserController.handle(req, res));
+    this.router.put("/update", (req, res) => this.updateUserController.handle(req, res));
+    this.router.delete("/remove/:id", (req, res) => this.removeUserController.handle(req, res));
 
     return this.router;
   }
 }
-
-// const userRoutes = Router();
-
-// const userRepo = new UserInMemoryRepository();
-// const mailProvider = new NodemailerProvider();
-// const registerUserUseCase = new RegisterUserUseCase(userRepo, mailProvider);
-// const registerUserController = new RegisterUserController(registerUserUseCase);
-
-// userRoutes.post("/register", registerUserController.handle);
-
-// userRoutes.put('/update',  userController.update);
-// userRoutes.delete('/remove', authService, userController.remove);
-// userRoutes.get('/:id', authService, userController.get);

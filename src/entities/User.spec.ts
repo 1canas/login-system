@@ -2,15 +2,15 @@ import User, { UserProps } from "./User";
 
 describe("User tests", () => {
   test("constructor", () => {
-    const userProps: UserProps = {
+    const userProps = {
       email: "teste@test.com",
       name: "teste",
       password: "teste102030",
     };
 
-    const user = new User(userProps);
+    const user = new User(userProps, "aaaaa");
 
-    expect(user.id).toBeDefined();
+    expect(user.id).toBe("aaaaa");
     expect({name: user.name, email: user.email, password: user.password}).toStrictEqual(userProps);
   });
 
