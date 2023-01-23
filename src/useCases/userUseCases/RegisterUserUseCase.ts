@@ -7,7 +7,7 @@ import { IUserDTO } from "../IUserDTO";
 export default class RegisterUserUseCase {
     constructor(
         private userRepo: IUserRepository,
-        private mailProvider: IMailProvider
+        private mailProvider?: IMailProvider
     ) {}
     
     async execute(userDTO: IUserDTO): Promise<Required<IUserDTO>> {
@@ -21,18 +21,20 @@ export default class RegisterUserUseCase {
 
         await this.userRepo.save(user);
 
-        await this.mailProvider.sendMail({
-            to: {
-                name: user.name,
-                address: user.email
-            },
-            from: {
-                name: 'Welcome Company',
-                address: 'welcome@teste.com'
-            },
-            subject: "Welcome",
-            body: `<span>Welcome to our login sistem example: ${user.name}`
-        })
+        if (this.mailProvider) {
+            await this.mailProvider.sendMail({
+                to: {
+                    name: user.name,
+                    address: user.email
+                },
+                from: {
+                    name: 'Welcome Company',
+                    address: 'welcome@teste.com'
+                },
+                subject: "Welcome",
+                body: `<span>Welcome to our login sistem example: ${user.name}`
+            })
+        }
 
         return user.toObject();
     }

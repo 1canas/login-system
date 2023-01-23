@@ -1,6 +1,6 @@
 import { LoginUseCase } from "../../../useCases/loginUseCase/LoginUseCase";
 import { LoginController } from "../../presentation/controllers/authController/LoginController";
-import UserInMemoryRepository from "../../repositories/inMemoryRepo/UserInMemoryRepository";
+import { userRepo } from "../../repositories/inMemoryRepo/index";
 import { JwtProvider } from "../../providers/securityProvider/jwt/JwtProvider";
 import { Router } from "express";
 
@@ -8,7 +8,6 @@ export class AuthRoutes {
   private loginController: LoginController;
 
   constructor(private router: Router) {
-    const userRepo = new UserInMemoryRepository();
     const securityProvider = new JwtProvider();
 
     const loginUseCase = new LoginUseCase(userRepo, securityProvider);
@@ -17,7 +16,9 @@ export class AuthRoutes {
   }
 
   initRoutes() {
-    this.router.post('/login', (req, res) => this.loginController.handle(req, res));
+    this.router.post("/login", (req, res) =>
+      this.loginController.handle(req, res)
+    );
 
     return this.router;
   }

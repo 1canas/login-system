@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pnpm tsc-watch --onsuccess \"nodemon dist/index.js\"",
+    "start": "pnpm tsc-watch --onsuccess \"nodemon dist/server.js\"",
     "test": "jest"
   },
   "module": "commonjs",
