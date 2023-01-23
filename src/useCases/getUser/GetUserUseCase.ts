@@ -1,20 +1,13 @@
 import IUserRepository from "../../infra/repositories/IUserRepository";
-import { IGetUserDTO } from "./IGetUserDTO";
-
-export type GetUserOutput = {
-    id: string,
-    name: string,
-    email: string,
-    password: string
-}
+import { IUserDTO } from "../IUserDTO";
 
 export default class GetUserUseCase {
     constructor(
         private userRepo: IUserRepository
     ) {}
 
-    async execute(input: IGetUserDTO): Promise<GetUserOutput> {
-        const user = await this.userRepo.getById(input.id);
+    async execute(id: string): Promise<IUserDTO> {
+        const user = await this.userRepo.getById(id);
 
         if (!user) {
             throw new Error('User not found');

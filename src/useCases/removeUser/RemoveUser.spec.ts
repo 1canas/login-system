@@ -1,8 +1,7 @@
 import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
 import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
-import { IRegisterUserDTO } from "../RegisterUser/IRegisterUserDTO";
 import RegisterUserUseCase from "../RegisterUser/RegisterUserUseCase";
-import { IRemoveUserDTO } from "./IRemoveUserDTO";
+import { IUserDTO } from "../IUserDTO";
 import RemoveUserUseCase from "./RemoveUserUseCase";
 
 describe('remove user usecase', () => {
@@ -12,7 +11,7 @@ describe('remove user usecase', () => {
 
         const registerUserService = new RegisterUserUseCase(inMemoryRepo, nodemailerProvider);
 
-        const registerUserDTO: IRegisterUserDTO = {
+        const registerUserDTO: IUserDTO = {
             email: "teste234@test.com",
             name: "teste",
             password: "teste102030",
@@ -28,11 +27,7 @@ describe('remove user usecase', () => {
 
         const removeUserService = new RemoveUserUseCase(inMemoryRepo);
 
-        const removeUserDTO: IRemoveUserDTO = {
-            id: savedUser.id
-        };
-
-        await removeUserService.execute(removeUserDTO);
+        await removeUserService.execute(savedUser.id);
 
         expect(inMemoryRepo.userList).toHaveLength(0);
     });

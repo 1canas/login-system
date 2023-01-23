@@ -11,7 +11,7 @@ export default class User {
 
   public name: string;
   public email: string;
-  public password: string;
+  public password: string = '';
 
   constructor(props: UserProps, id?: string) {
     this.id = id || crypto.randomUUID();

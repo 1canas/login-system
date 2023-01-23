@@ -2,14 +2,7 @@ import User from "../../entities/User";
 import IMailProvider from "../../infra/providers/IMailProvider";
 import IUserRepository from "../../infra/repositories/IUserRepository";
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
-import { IRegisterUserDTO } from "./IRegisterUserDTO";
-
-export type RegisterUserOutput = {
-    id: string,
-    name: string,
-    email: string,
-    password: string
-}
+import { IUserDTO } from "../IUserDTO";
 
 export default class RegisterUserUseCase {
     constructor(
@@ -17,14 +10,14 @@ export default class RegisterUserUseCase {
         private mailProvider: IMailProvider
     ) {}
     
-    async execute(input: IRegisterUserDTO): Promise<RegisterUserOutput> {
-        const userAlreadyExist = await this.checkUserExistence(input.email);
+    async execute(userDTO: IUserDTO): Promise<Required<IUserDTO>> {
+        const userAlreadyExist = await this.checkUserExistence(userDTO.email);
         
         if (userAlreadyExist) {
             throw new Error("A user with this email already exists");
         }
 
-        const user = new User(input);
+        const user = new User(userDTO);
 
         await this.userRepo.save(user);
 

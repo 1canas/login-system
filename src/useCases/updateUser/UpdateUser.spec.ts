@@ -1,18 +1,17 @@
 import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
 import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
-import { IRegisterUserDTO } from "../RegisterUser/IRegisterUserDTO";
+import { IUserDTO } from "../IUserDTO";
 import RegisterUserUseCase from "../RegisterUser/RegisterUserUseCase";
-import { IUpdateUserDTO } from "./IUpdateUserDTO";
 import UpdateUserUseCase from "./UpdateUserUseCase";
 
-describe('register user usecase', () => {
-    test('register user normal case', async () => {
+describe('update user usecase', () => {
+    test('update user normal case', async () => {
         const inMemoryRepo = new UserInMemoryRepository();
         const nodemailerProvider = new NodemailerProvider();
 
         const registerUserService = new RegisterUserUseCase(inMemoryRepo, nodemailerProvider);
 
-        const registerUserDTO: IRegisterUserDTO = {
+        const registerUserDTO: IUserDTO = {
             email: "teste234@test.com",
             name: "teste",
             password: "teste102030",
@@ -22,16 +21,15 @@ describe('register user usecase', () => {
 
         const updateUserService = new UpdateUserUseCase(inMemoryRepo);
 
-        const updateUserDTO: IUpdateUserDTO = {
-            id,
+        const updateUserDTO: IUserDTO = {
             email: "teste236@test.com",
             name: "teste123",
             password: "teste102030",
         };
 
-        const updatedUser = await updateUserService.execute(updateUserDTO);
+        const updatedUser = await updateUserService.execute(updateUserDTO, id);
 
         expect(inMemoryRepo.userList).toHaveLength(1);
-        expect(updatedUser).toStrictEqual(updateUserDTO);
+        expect(updatedUser).toStrictEqual({...updateUserDTO, id});
     });
 })

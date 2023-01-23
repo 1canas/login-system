@@ -1,9 +1,8 @@
 import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
 import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
-import { IRegisterUserDTO } from "../registerUser/IRegisterUserDTO";
 import RegisterUserUseCase from "../registerUser/RegisterUserUseCase";
 import GetUserUseCase from "./GetUserUseCase";
-import { IGetUserDTO } from "./IGetUserDTO";
+import { IUserDTO } from "../IUserDTO";
 
 describe('get user usecase', () => {
     test('return user', async () => {
@@ -13,7 +12,7 @@ describe('get user usecase', () => {
 
         const registerUserService = new RegisterUserUseCase(inMemoryRepo, nodemailerProvider);
 
-        const registerUserDTO: IRegisterUserDTO = {
+        const registerUserDTO: IUserDTO = {
             email: "teste234@test.com",
             name: "teste",
             password: "teste102030",
@@ -29,11 +28,7 @@ describe('get user usecase', () => {
 
         const getUserService = new GetUserUseCase(inMemoryRepo);
 
-        const getUserDTO: IGetUserDTO = {
-            id: savedUser.id
-        };
-
-        const findedUser = await getUserService.execute(getUserDTO);
+        const findedUser = await getUserService.execute(savedUser.id);
         expect(findedUser).toStrictEqual({
             ...registerUserDTO,
             id: inMemoryRepo.userList[0].id
