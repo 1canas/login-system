@@ -1,4 +1,4 @@
-import RegisterUserUseCase from "../../../useCases/RegisterUserUseCase";
+import RegisterUserUseCase from "../../../../useCases/userUseCases/RegisterUserUseCase";
 import { Request, Response } from "express";
 
 export class RegisterUserController {

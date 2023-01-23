@@ -1,5 +1,5 @@
-import IUserRepository from "../infra/repositories/IUserRepository";
-import { IUserDTO } from "./IUserDTO";
+import IUserRepository from "../../infra/repositories/IUserRepository";
+import { IUserDTO } from "../IUserDTO";
 
 export default class GetUserUseCase {
     constructor(

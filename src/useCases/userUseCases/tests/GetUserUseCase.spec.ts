@@ -1,8 +1,8 @@
-import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
-import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
+import { NodemailerProvider } from "../../../infra/providers/mailProvider/nodemailer/NodemailerProvider";
+import UserInMemoryRepository from "../../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
 import RegisterUserUseCase from "../RegisterUserUseCase";
 import GetUserUseCase from "../GetUserUseCase";
-import { IUserDTO } from "../IUserDTO";
+import { IUserDTO } from "../../IUserDTO";
 
 describe('get user usecase', () => {
     test('return user', async () => {

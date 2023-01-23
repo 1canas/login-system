@@ -1,8 +1,8 @@
-import GetUserUseCase from "../../../useCases/GetUserUseCase";
+import RemoveUserUseCase from "../../../../useCases/userUseCases/RemoveUserUseCase";
 import { Request, Response } from "express";
 
-export class GetUserController {
-  constructor(private getUserUseCase: GetUserUseCase) {}
+export class RemoveUserController {
+  constructor(private removeUserUseCase: RemoveUserUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
     const dateObject = new Date();
@@ -10,13 +10,12 @@ export class GetUserController {
     const { id } = req.params;
 
     try {
-      const user = await this.getUserUseCase.execute({ id });
+      await this.removeUserUseCase.execute(id);
 
       return res.status(200).json({
         statusCode: 200,
-        message: "Success",
-        timestamp: dateObject.getTime(),
-        user
+        message: "Success on remove user",
+        timestamp: dateObject.getTime()
       });
     } catch (err) {
       console.log(err);

@@ -23,6 +23,7 @@ export default class UserInMemoryRepository implements IUserRepository {
     }
     
     async getByEmail(email: string): Promise<User | undefined> {
+        console.log(this.userList)
         return await this.userList.find(user => user.email === email);
     }
 

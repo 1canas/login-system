@@ -1,7 +1,7 @@
-import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
-import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
+import { NodemailerProvider } from "../../../infra/providers/mailProvider/nodemailer/NodemailerProvider";
+import UserInMemoryRepository from "../../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
 import RegisterUserUseCase from "../RegisterUserUseCase";
-import { IUserDTO } from "../IUserDTO";
+import { IUserDTO } from "../../IUserDTO";
 import RemoveUserUseCase from "../RemoveUserUseCase";
 
 describe('remove user usecase', () => {

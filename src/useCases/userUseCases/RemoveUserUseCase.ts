@@ -1,6 +1,6 @@
-import IUserRepository from "../infra/repositories/IUserRepository";
+import IUserRepository from "../../infra/repositories/IUserRepository";
 
-import { isNotNullUndefined } from "../utils/isNotNullUndefined";
+import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
 
 export default class RemoveUserUseCase {
   constructor(private userRepo: IUserRepository) {}

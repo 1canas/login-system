@@ -1,4 +1,4 @@
-import UpdateUserUseCase from "../../../useCases/UpdateUserUseCase";
+import UpdateUserUseCase from "../../../../useCases/userUseCases//UpdateUserUseCase";
 import { Request, Response } from "express";
 
 export class UpdateUserController {
@@ -10,7 +10,7 @@ export class UpdateUserController {
     const { id, name, email, password } = req.body;
 
     try {
-      const updateUser = await this.updateUserUseCase.execute({ id, name, email, password });
+      const updateUser = await this.updateUserUseCase.execute({ name, email, password }, id);
 
       return res.status(200).json({
         statusCode: 200,

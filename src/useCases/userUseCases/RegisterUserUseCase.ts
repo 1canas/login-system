@@ -1,8 +1,8 @@
-import User from "../entities/User";
-import IMailProvider from "../infra/providers/IMailProvider";
-import IUserRepository from "../infra/repositories/IUserRepository";
-import { isNotNullUndefined } from "../utils/isNotNullUndefined";
-import { IUserDTO } from "./IUserDTO";
+import User from "../../entities/User";
+import IMailProvider from "../../infra/providers/mailProvider/IMailProvider";
+import IUserRepository from "../../infra/repositories/IUserRepository";
+import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
+import { IUserDTO } from "../IUserDTO";
 
 export default class RegisterUserUseCase {
     constructor(

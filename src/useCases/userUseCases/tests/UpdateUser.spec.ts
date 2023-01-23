@@ -1,6 +1,6 @@
-import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
-import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
-import { IUserDTO } from "../IUserDTO";
+import { NodemailerProvider } from "../../../infra/providers/mailProvider/nodemailer/NodemailerProvider";
+import UserInMemoryRepository from "../../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
+import { IUserDTO } from "../../IUserDTO";
 import RegisterUserUseCase from "../RegisterUserUseCase";
 import UpdateUserUseCase from "../UpdateUserUseCase";
 

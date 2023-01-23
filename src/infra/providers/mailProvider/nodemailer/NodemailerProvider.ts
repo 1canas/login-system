@@ -10,8 +10,8 @@ export class NodemailerProvider implements IMailProvider {
       host: "smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "e88782d26f8401",
-        pass: "e57b6fac56039c",
+        user: "bfd43f58fd8530",
+        pass: "f156b4d2446d4e",
       }
     });
   }

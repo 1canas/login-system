@@ -1,9 +1,9 @@
-import User from "../entities/User";
+import User from "../../entities/User";
 
-import IUserRepository from "../infra/repositories/IUserRepository";
-import { IUserDTO } from "./IUserDTO";
+import IUserRepository from "../../infra/repositories/IUserRepository";
+import { IUserDTO } from "../IUserDTO";
 
-import { isNotNullUndefined } from "../utils/isNotNullUndefined";
+import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
 
 export default class UpdateUserUseCase {
   constructor(private userRepo: IUserRepository) {}

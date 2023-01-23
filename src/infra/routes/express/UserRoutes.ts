@@ -1,19 +1,19 @@
 import { Router } from "express";
 
 import UserInMemoryRepository from "../../repositories/inMemoryRepo/UserInMemoryRepository";
-import { NodemailerProvider } from "../../providers/nodemailer/NodemailerProvider";
+import { NodemailerProvider } from "../../providers/mailProvider/nodemailer/NodemailerProvider";
 
-import RegisterUserUseCase from "../../../useCases/RegisterUserUseCase";
-import { RegisterUserController } from "../../presentation/controllers/RegisterUserController.";
+import RegisterUserUseCase from "../../../useCases/userUseCases/RegisterUserUseCase";
+import { RegisterUserController } from "../../presentation/controllers/userControllers/RegisterUserController.";
 
-import GetUserUseCase from "../../../useCases/GetUserUseCase";
-import { GetUserController } from "../../presentation/controllers/GetUserController";
+import GetUserUseCase from "../../../useCases/userUseCases/GetUserUseCase";
+import { GetUserController } from "../../presentation/controllers/userControllers/GetUserController";
 
-import RemoveUserUseCase from "../../../useCases/RemoveUserUseCase";
-import { RemoveUserController } from "../../presentation/controllers/RemoveUserController";
+import RemoveUserUseCase from "../../../useCases/userUseCases/RemoveUserUseCase";
+import { RemoveUserController } from "../../presentation/controllers/userControllers/RemoveUserController";
 
-import UpdateUserUseCase from "../../../useCases/UpdateUserUseCase";
-import { UpdateUserController } from "../../presentation/controllers/UpdateUserController";
+import UpdateUserUseCase from "../../../useCases/userUseCases/UpdateUserUseCase";
+import { UpdateUserController } from "../../presentation/controllers/userControllers/UpdateUserController";
 
 export class UserRoutes {
   private registerUserController: RegisterUserController;
