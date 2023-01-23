@@ -1,7 +1,7 @@
 import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
 import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
 import { IUserDTO } from "../IUserDTO";
-import RegisterUserUseCase from "./RegisterUserUseCase";
+import RegisterUserUseCase from "../RegisterUserUseCase";
 
 describe('register user usecase', () => {
     test('register user normal case', async () => {
@@ -21,6 +21,7 @@ describe('register user usecase', () => {
         expect(inMemoryRepo.userList).toHaveLength(1);
         expect(savedUser).toStrictEqual({
             ...registerUserDTO,
+            password: savedUser.password,
             id: inMemoryRepo.userList[0].id
         });
     });

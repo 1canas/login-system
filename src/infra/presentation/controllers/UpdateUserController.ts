@@ -1,4 +1,4 @@
-import UpdateUserUseCase from "../../../useCases/updateUser/UpdateUserUseCase";
+import UpdateUserUseCase from "../../../useCases/UpdateUserUseCase";
 import { Request, Response } from "express";
 
 export class UpdateUserController {

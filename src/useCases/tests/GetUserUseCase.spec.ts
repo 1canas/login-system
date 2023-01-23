@@ -1,7 +1,7 @@
 import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
 import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
-import RegisterUserUseCase from "../registerUser/RegisterUserUseCase";
-import GetUserUseCase from "./GetUserUseCase";
+import RegisterUserUseCase from "../RegisterUserUseCase";
+import GetUserUseCase from "../GetUserUseCase";
 import { IUserDTO } from "../IUserDTO";
 
 describe('get user usecase', () => {
@@ -12,25 +12,20 @@ describe('get user usecase', () => {
 
         const registerUserService = new RegisterUserUseCase(inMemoryRepo, nodemailerProvider);
 
-        const registerUserDTO: IUserDTO = {
+        const userDTO: IUserDTO = {
             email: "teste234@test.com",
             name: "teste",
             password: "teste102030",
         };
 
-        const savedUser = await registerUserService.execute(registerUserDTO);
-
-        expect(inMemoryRepo.userList).toHaveLength(1);
-        expect(savedUser).toStrictEqual({
-            ...registerUserDTO,
-            id: inMemoryRepo.userList[0].id
-        });
+        const savedUser = await registerUserService.execute(userDTO);
 
         const getUserService = new GetUserUseCase(inMemoryRepo);
 
         const findedUser = await getUserService.execute(savedUser.id);
         expect(findedUser).toStrictEqual({
-            ...registerUserDTO,
+            ...userDTO,
+            password: savedUser.password,
             id: inMemoryRepo.userList[0].id
         });
     })

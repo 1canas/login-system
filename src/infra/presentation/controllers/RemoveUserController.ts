@@ -1,4 +1,4 @@
-import RemoveUserUseCase from "../../../useCases/removeUser/RemoveUserUseCase";
+import RemoveUserUseCase from "../../../useCases/RemoveUserUseCase";
 import { Request, Response } from "express";
 
 export class RemoveUserController {

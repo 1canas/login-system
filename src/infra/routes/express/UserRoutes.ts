@@ -3,16 +3,16 @@ import { Router } from "express";
 import UserInMemoryRepository from "../../repositories/inMemoryRepo/UserInMemoryRepository";
 import { NodemailerProvider } from "../../providers/nodemailer/NodemailerProvider";
 
-import RegisterUserUseCase from "../../../useCases/registerUser/RegisterUserUseCase";
+import RegisterUserUseCase from "../../../useCases/RegisterUserUseCase";
 import { RegisterUserController } from "../../presentation/controllers/RegisterUserController.";
 
-import GetUserUseCase from "../../../useCases/getUser/GetUserUseCase";
+import GetUserUseCase from "../../../useCases/GetUserUseCase";
 import { GetUserController } from "../../presentation/controllers/GetUserController";
 
-import RemoveUserUseCase from "../../../useCases/removeUser/RemoveUserUseCase";
+import RemoveUserUseCase from "../../../useCases/RemoveUserUseCase";
 import { RemoveUserController } from "../../presentation/controllers/RemoveUserController";
 
-import UpdateUserUseCase from "../../../useCases/updateUser/UpdateUserUseCase";
+import UpdateUserUseCase from "../../../useCases/UpdateUserUseCase";
 import { UpdateUserController } from "../../presentation/controllers/UpdateUserController";
 
 export class UserRoutes {

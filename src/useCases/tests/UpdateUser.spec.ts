@@ -1,8 +1,8 @@
 import { NodemailerProvider } from "../../infra/providers/nodemailer/NodemailerProvider";
 import UserInMemoryRepository from "../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
 import { IUserDTO } from "../IUserDTO";
-import RegisterUserUseCase from "../RegisterUser/RegisterUserUseCase";
-import UpdateUserUseCase from "./UpdateUserUseCase";
+import RegisterUserUseCase from "../RegisterUserUseCase";
+import UpdateUserUseCase from "../UpdateUserUseCase";
 
 describe('update user usecase', () => {
     test('update user normal case', async () => {
@@ -30,6 +30,6 @@ describe('update user usecase', () => {
         const updatedUser = await updateUserService.execute(updateUserDTO, id);
 
         expect(inMemoryRepo.userList).toHaveLength(1);
-        expect(updatedUser).toStrictEqual({...updateUserDTO, id});
+        expect(updatedUser).toStrictEqual({...updateUserDTO, password: updatedUser.password, id});
     });
 })
