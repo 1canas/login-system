@@ -7,8 +7,6 @@ export class UpdateUserController {
   constructor(private updateUserUseCase: UpdateUserUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const dateObject = new Date();
-
     const { id, name, email, password } = req.body;
 
     try {

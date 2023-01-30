@@ -8,15 +8,15 @@ export class RemoveUserValidationMiddleware {
         const { password, confirmPassword } = req.body;
 
         if (!id) {
-            res.status(422).json(responseMessage(422, "Expected 'id' param"));   
+            return res.status(422).json(responseMessage(422, "Expected 'id' param"));   
         }
 
         if (!password) {
-            res.status(422).json(responseMessage(422, "Expected 'password' field"));
+            return res.status(422).json(responseMessage(422, "Expected 'password' field"));
         }
 
         if (!confirmPassword) {
-            res.status(422).json(responseMessage(422, "Expected 'confirmPassword' field"));
+            return res.status(422).json(responseMessage(422, "Expected 'confirmPassword' field"));
         }
 
         next();
