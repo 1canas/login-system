@@ -1,6 +1,6 @@
 import { Request, response, Response } from "express";
 import { IncorrectPasswordError } from "../../../useCases/loginUseCase/errors/IncorrectPasswordError";
-import { UserNotFoundError } from "../../../useCases/loginUseCase/errors/UserNotFoundError";
+import { UserNotFoundError } from "../../../errors/UserNotFoundError";
 import { LoginUseCase } from "../../../useCases/loginUseCase/LoginUseCase";
 import { responseMessage } from "../../static/responseMessage";
 

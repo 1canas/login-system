@@ -1,3 +1,4 @@
+import { UserNotFoundError } from "../../errors/UserNotFoundError";
 import IUserRepository from "../../repositories/IUserRepository";
 
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
@@ -9,7 +10,7 @@ export default class RemoveUserUseCase {
     const userExists = await this.checkUserExistence(id);
 
     if (!userExists) {
-      throw new Error("User not found");
+      throw new UserNotFoundError("User not found");
     }
 
     await this.userRepo.remove(id);

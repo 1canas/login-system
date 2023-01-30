@@ -2,7 +2,7 @@ import { NodemailerProvider } from "../../../providers/mailProvider/nodemailer/N
 import { JwtProvider } from "../../../providers/securityProvider/jwt/JwtProvider";
 import UserInMemoryRepository from "../../../repositories/inMemoryRepo/UserInMemoryRepository";
 import { IUserDTO } from "../../IUserDTO";
-import RegisterUserUseCase from "../../userUseCases/RegisterUserUseCase";
+import RegisterUserUseCase, { RegisterUserInput } from "../../userUseCases/RegisterUserUseCase";
 import { LoginUseCase } from "../LoginUseCase";
 
 describe("login user case", () => {
@@ -15,10 +15,11 @@ describe("login user case", () => {
       inMemoryRepo
     );
 
-    const registerUserDTO: IUserDTO = {
+    const registerUserDTO: RegisterUserInput<IUserDTO> = {
       email: "teste234@test.com",
       name: "teste",
       password: "teste102030",
+      confirmPassword: "teste102030"
     };
 
     const savedUser = await registerUserService.execute(registerUserDTO);

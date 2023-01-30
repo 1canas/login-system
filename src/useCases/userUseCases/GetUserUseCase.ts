@@ -1,3 +1,4 @@
+import { UserNotFoundError } from "../../errors/UserNotFoundError";
 import IUserRepository from "../../repositories/IUserRepository";
 import { IUserDTO } from "../IUserDTO";
 
@@ -10,7 +11,7 @@ export default class GetUserUseCase {
         const user = await this.userRepo.getById(id);
 
         if (!user) {
-            throw new Error('User not found');
+            throw new UserNotFoundError('User not found');
         }
 
         return user.toObject();

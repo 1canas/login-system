@@ -2,7 +2,13 @@ import User from "../../entities/User";
 import IMailProvider from "../../providers/mailProvider/IMailProvider";
 import IUserRepository from "../../repositories/IUserRepository";
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
+import {UserAlreadyExistError} from "./errors/UserAlreadyExistsError";
 import { IUserDTO } from "../IUserDTO";
+import {PasswordNotMatchError} from "./errors/PasswordNotMatchError";
+
+export type RegisterUserInput<T extends {}> = T & {
+    confirmPassword: string
+};
 
 export default class RegisterUserUseCase {
     constructor(
@@ -10,11 +16,15 @@ export default class RegisterUserUseCase {
         private mailProvider?: IMailProvider
     ) {}
     
-    async execute(userDTO: IUserDTO): Promise<Required<IUserDTO>> {
+    async execute(userDTO: RegisterUserInput<IUserDTO>): Promise<Required<IUserDTO>> {
+        if (userDTO.password !== userDTO.confirmPassword) {
+            throw new PasswordNotMatchError("Password do not match");
+        }
+
         const userAlreadyExist = await this.checkUserExistence(userDTO.email);
         
         if (userAlreadyExist) {
-            throw new Error("A user with this email already exists");
+            throw new UserAlreadyExistError("A user with this email already exists");
         }
 
         const user = new User(userDTO);

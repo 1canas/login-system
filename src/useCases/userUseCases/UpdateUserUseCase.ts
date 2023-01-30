@@ -4,6 +4,7 @@ import IUserRepository from "../../repositories/IUserRepository";
 import { IUserDTO } from "../IUserDTO";
 
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
+import { UserNotFoundError } from "../../errors/UserNotFoundError";
 
 export default class UpdateUserUseCase {
   constructor(private userRepo: IUserRepository) {}
@@ -12,7 +13,7 @@ export default class UpdateUserUseCase {
     const userExists = await this.checkUserExistence(id);
 
     if (!userExists) {
-      throw new Error("User not found");
+      throw new UserNotFoundError("User not found");
     }
 
     const user = new User(userDTO, id);

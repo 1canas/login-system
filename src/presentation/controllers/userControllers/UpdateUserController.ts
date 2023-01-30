@@ -1,5 +1,7 @@
 import UpdateUserUseCase from "../../../useCases/userUseCases//UpdateUserUseCase";
 import { Request, Response } from "express";
+import { UserNotFoundError } from "../../../errors/UserNotFoundError";
+import { responseMessage } from "../../static/responseMessage";
 
 export class UpdateUserController {
   constructor(private updateUserUseCase: UpdateUserUseCase) {}
@@ -13,19 +15,17 @@ export class UpdateUserController {
       const updateUser = await this.updateUserUseCase.execute({ name, email, password }, id);
 
       return res.status(200).json({
-        statusCode: 200,
-        message: "Success on update user",
-        timestamp: dateObject.getTime(),
-        updateUser
+        ...responseMessage(200, "Success on update user"),
+        updateUser,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      if (error instanceof UserNotFoundError) {
+        return res.status(204).json(responseMessage(200, error.message));
+      }
 
-      return res.status(500).json({
-        statusCode: 500,
-        message: "Server internal error",
-        timestamp: dateObject.getTime(),
-      });
+      return res
+        .status(500)
+        .json(responseMessage(500, "Server internal error"));
     }
   }
 }

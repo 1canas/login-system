@@ -1,4 +1,4 @@
-export function responseMessage(statusCode: number, message: string) {
+export function responseMessage(statusCode: number, message?: string) {
     const dateObject = new Date();
     
     return {

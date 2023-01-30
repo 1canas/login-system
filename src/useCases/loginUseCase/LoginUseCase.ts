@@ -1,6 +1,6 @@
 import { ISecurityProvider } from "../../providers/securityProvider/ISecurityProvider";
 import IUserRepository from "../../repositories/IUserRepository";
-import { UserNotFoundError } from "./errors/UserNotFoundError";
+import { UserNotFoundError } from "../../errors/UserNotFoundError";
 import { IncorrectPasswordError } from "./errors/IncorrectPasswordError";
 
 export class LoginUseCase {
