@@ -3,7 +3,6 @@ import { LoginController } from "../presentation/controllers/authController/Logi
 import { userRepo } from "../repositories/inMemoryRepo/index";
 import { jwtProvider } from "../providers/securityProvider/jwt/index";
 import { Router } from "express";
-
 import { LoginValidationMiddleware } from "../presentation/middlewares/validation/authRoutes/LoginValidationMiddleware";
 
 export class AuthRoutes {
