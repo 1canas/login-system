@@ -1,4 +1,4 @@
-import User, { UserProps } from "./User";
+import User, { UserProps } from "../User";
 
 describe("User tests", () => {
   test("constructor", () => {

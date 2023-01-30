@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { jwtProvider } from "../../providers/securityProvider/jwt";
+import { jwtProvider } from "../../../providers/securityProvider/jwt";
 
 export class AuthMiddleware {
   async handle(req: Request, res: Response, next: NextFunction) {
