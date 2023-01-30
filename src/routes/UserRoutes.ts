@@ -5,19 +5,19 @@ import { NodemailerProvider } from "../providers/mailProvider/nodemailer/Nodemai
 
 import RegisterUserUseCase from "../useCases/userUseCases/RegisterUserUseCase";
 import { RegisterUserController } from "../presentation/controllers/userControllers/RegisterUserController";
-import { RegisterUserValidationMiddleware } from "../presentation/middlewares/validation/RegisterUserValidationMiddleware";
+import { RegisterUserValidationMiddleware } from "../presentation/middlewares/validation/userRoutes/RegisterUserValidationMiddleware";
 
 import GetUserUseCase from "../useCases/userUseCases/GetUserUseCase";
 import { GetUserController } from "../presentation/controllers/userControllers/GetUserController";
-import { GetUserValidationMiddleware } from "../presentation/middlewares/validation/GetUserValidationMiddleware";
+import { GetUserValidationMiddleware } from "../presentation/middlewares/validation/userRoutes/GetUserValidationMiddleware";
 
 import RemoveUserUseCase from "../useCases/userUseCases/RemoveUserUseCase";
 import { RemoveUserController } from "../presentation/controllers/userControllers/RemoveUserController";
-import { RemoveUserValidationMiddleware } from "../presentation/middlewares/validation/RemoveUserValidationMiddleware";
+import { RemoveUserValidationMiddleware } from "../presentation/middlewares/validation/userRoutes//RemoveUserValidationMiddleware";
 
 import UpdateUserUseCase from "../useCases/userUseCases/UpdateUserUseCase";
 import { UpdateUserController } from "../presentation/controllers/userControllers/UpdateUserController";
-import { UpdateUserValidationMiddleware } from "../presentation/middlewares/validation/UpdateUserValidationMiddleware";
+import { UpdateUserValidationMiddleware } from "../presentation/middlewares/validation/userRoutes//UpdateUserValidationMiddleware";
 
 import { AuthMiddleware } from "../presentation/middlewares/auth/AuthMiddleware";
 

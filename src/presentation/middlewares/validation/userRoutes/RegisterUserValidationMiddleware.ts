@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { responseMessage } from "../../static/responseMessage";
+import { responseMessage } from "../../../static/responseMessage";
 
 export class RegisterUserValidationMiddleware {
     handle(req: Request, res: Response, next: NextFunction) {
