@@ -1,4 +1,4 @@
-import IUserRepository from "../../infra/repositories/IUserRepository";
+import IUserRepository from "../../repositories/IUserRepository";
 
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
 

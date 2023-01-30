@@ -1,5 +1,5 @@
-import { NodemailerProvider } from "../../../infra/providers/mailProvider/nodemailer/NodemailerProvider";
-import UserInMemoryRepository from "../../../infra/repositories/inMemoryRepo/UserInMemoryRepository";
+import { NodemailerProvider } from "../../../providers/mailProvider/nodemailer/NodemailerProvider";
+import UserInMemoryRepository from "../../../repositories/inMemoryRepo/UserInMemoryRepository";
 import { IUserDTO } from "../../IUserDTO";
 import RegisterUserUseCase from "../RegisterUserUseCase";
 
@@ -8,7 +8,7 @@ describe('register user usecase', () => {
         const inMemoryRepo = new UserInMemoryRepository();
         const nodemailerProvider = new NodemailerProvider();
 
-        const registerUserService = new RegisterUserUseCase(inMemoryRepo, nodemailerProvider);
+        const registerUserService = new RegisterUserUseCase(inMemoryRepo);
 
         const registerUserDTO: IUserDTO = {
             email: "teste234@test.com",

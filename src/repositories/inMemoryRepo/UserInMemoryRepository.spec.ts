@@ -1,4 +1,4 @@
-import User, { UserProps } from "../../../entities/User";
+import User, { UserProps } from "../../entities/User";
 import UserInMemoryRepository from "./UserInMemoryRepository";
 
 describe("user in memory repository", () => {

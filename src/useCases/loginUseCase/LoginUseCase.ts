@@ -1,5 +1,7 @@
-import { ISecurityProvider } from "../../infra/providers/securityProvider/ISecurityProvider";
-import IUserRepository from "../../infra/repositories/IUserRepository";
+import { ISecurityProvider } from "../../providers/securityProvider/ISecurityProvider";
+import IUserRepository from "../../repositories/IUserRepository";
+import { UserNotFoundError } from "./errors/UserNotFoundError";
+import { IncorrectPasswordError } from "./errors/IncorrectPasswordError";
 
 export class LoginUseCase {
   constructor(
@@ -11,11 +13,11 @@ export class LoginUseCase {
     const user = await this.userRepo.getByEmail(email);
 
     if (!user) {
-      throw new Error("user not found");
+      throw new UserNotFoundError("User not found");
     }
 
     if (!user.comparePassword(password)) {
-      throw new Error("password not match");
+      throw new IncorrectPasswordError("Incorrect Password");
     }
 
     return this.securityProvider.generateToken(user.toObject());

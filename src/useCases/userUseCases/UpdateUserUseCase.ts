@@ -1,6 +1,6 @@
 import User from "../../entities/User";
 
-import IUserRepository from "../../infra/repositories/IUserRepository";
+import IUserRepository from "../../repositories/IUserRepository";
 import { IUserDTO } from "../IUserDTO";
 
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";

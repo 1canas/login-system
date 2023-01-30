@@ -1,21 +1,24 @@
 import { Router } from "express";
 
-import { userRepo } from "../../repositories/inMemoryRepo/index";
-import { NodemailerProvider } from "../../providers/mailProvider/nodemailer/NodemailerProvider";
+import { userRepo } from "../repositories/inMemoryRepo/index";
+import { NodemailerProvider } from "../providers/mailProvider/nodemailer/NodemailerProvider";
 
-import RegisterUserUseCase from "../../../useCases/userUseCases/RegisterUserUseCase";
-import { RegisterUserController } from "../../presentation/controllers/userControllers/RegisterUserController.";
+import RegisterUserUseCase from "../useCases/userUseCases/RegisterUserUseCase";
+import { RegisterUserController } from "../presentation/controllers/userControllers/RegisterUserController.";
 
-import GetUserUseCase from "../../../useCases/userUseCases/GetUserUseCase";
-import { GetUserController } from "../../presentation/controllers/userControllers/GetUserController";
+import GetUserUseCase from "../useCases/userUseCases/GetUserUseCase";
+import { GetUserController } from "../presentation/controllers/userControllers/GetUserController";
 
-import RemoveUserUseCase from "../../../useCases/userUseCases/RemoveUserUseCase";
-import { RemoveUserController } from "../../presentation/controllers/userControllers/RemoveUserController";
+import RemoveUserUseCase from "../useCases/userUseCases/RemoveUserUseCase";
+import { RemoveUserController } from "../presentation/controllers/userControllers/RemoveUserController";
 
-import UpdateUserUseCase from "../../../useCases/userUseCases/UpdateUserUseCase";
-import { UpdateUserController } from "../../presentation/controllers/userControllers/UpdateUserController";
+import UpdateUserUseCase from "../useCases/userUseCases/UpdateUserUseCase";
+import { UpdateUserController } from "../presentation/controllers/userControllers/UpdateUserController";
+import { AuthMiddleware } from "../presentation/middlewares/AuthMiddleware";
 
 export class UserRoutes {
+  private authMiddleware: AuthMiddleware;
+
   private registerUserController: RegisterUserController;
   private getUserController: GetUserController;
   private updateUserController: UpdateUserController;
@@ -30,6 +33,8 @@ export class UserRoutes {
     const getUserUseCase = new GetUserUseCase(userRepo);
     const updateUserUseCase = new UpdateUserUseCase(userRepo);
     const removeUserUseCase = new RemoveUserUseCase(userRepo);
+
+    this.authMiddleware = new AuthMiddleware();
 
     this.registerUserController = new RegisterUserController(
       registerUserUseCase
@@ -46,10 +51,10 @@ export class UserRoutes {
     this.router.get("/:id", (req, res) =>
       this.getUserController.handle(req, res)
     );
-    this.router.put("/update", (req, res) =>
+    this.router.put("/update", this.authMiddleware.handle, (req, res) =>
       this.updateUserController.handle(req, res)
     );
-    this.router.delete("/remove/:id", (req, res) =>
+    this.router.delete("/remove/:id", this.authMiddleware.handle, (req, res) =>
       this.removeUserController.handle(req, res)
     );
 

@@ -1,6 +1,6 @@
 import User from "../../entities/User";
-import IMailProvider from "../../infra/providers/mailProvider/IMailProvider";
-import IUserRepository from "../../infra/repositories/IUserRepository";
+import IMailProvider from "../../providers/mailProvider/IMailProvider";
+import IUserRepository from "../../repositories/IUserRepository";
 import { isNotNullUndefined } from "../../utils/isNotNullUndefined";
 import { IUserDTO } from "../IUserDTO";
 
