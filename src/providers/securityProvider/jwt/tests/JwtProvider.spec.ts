@@ -3,7 +3,6 @@ import { jwtProvider } from "../index";
 
 describe("jwt tests", () => {
     test("jwt token", () => {
-        console.log(jwtProvider)
         const mockTest = {
             a: "teste123",
             b: "teste321" 
@@ -14,7 +13,6 @@ describe("jwt tests", () => {
         try {
             jwtProvider.verifyToken(token);
         } catch (err) {
-            console.log(err)
             expect(err).toBe(err instanceof JsonWebTokenError);
         }
     });

@@ -1,3 +1,4 @@
+import User from "../../entities/User";
 import { UserNotFoundError } from "../../errors/UserNotFoundError";
 import IUserRepository from "../../repositories/IUserRepository";
 
@@ -7,11 +8,13 @@ export default class RemoveUserUseCase {
   constructor(private userRepo: IUserRepository) {}
 
   async execute(id: string, password: string): Promise<void> {
-    const user = await this.userRepo.getById(id);
+    const userModel = await this.userRepo.getById(id);
 
-    if (!user) {
+    if (!userModel) {
       throw new UserNotFoundError("User not found");
     }
+
+    const user = new User({ ...userModel, password }, userModel.id);
 
     if (!user.comparePassword(password)) {
       throw new IncorrectPasswordError("Incorrect password");

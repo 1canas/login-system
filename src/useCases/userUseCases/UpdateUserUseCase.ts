@@ -17,11 +17,11 @@ export default class UpdateUserUseCase {
       throw new UserNotFoundError("User not found");
     }
 
-    if (!userExists.comparePassword(inputedPassword)) {
+    const user = new User({ ...userExists, password: inputedPassword }, id);
+
+    if (!user.comparePassword(inputedPassword)) {
       throw new IncorrectPasswordError("Incorrect password");
     }
-
-    const user = new User({ ...userExists, password: inputedPassword }, id);
 
     const { email, name } = toModify;
 
