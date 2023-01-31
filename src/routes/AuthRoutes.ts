@@ -1,6 +1,6 @@
 import { LoginUseCase } from "../useCases/loginUseCase/LoginUseCase";
 import { LoginController } from "../presentation/controllers/authController/LoginController";
-import { userRepo } from "../repositories/inMemoryRepo/index";
+import { userRepo } from "../repositories/index";
 import { jwtProvider } from "../providers/securityProvider/jwt/index";
 import { Router } from "express";
 import { LoginValidationMiddleware } from "../presentation/middlewares/validation/authRoutes/LoginValidationMiddleware";

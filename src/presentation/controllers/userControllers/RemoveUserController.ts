@@ -10,10 +10,10 @@ export class RemoveUserController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { password, confirmPassword } = req.body;
+    const { password } = req.body;
 
     try {
-      await this.removeUserUseCase.execute(id, password, confirmPassword);
+      await this.removeUserUseCase.execute(id, password);
 
       return res.status(200).json(responseMessage(200, "Success on remove user"));
     } catch (error) {
@@ -29,6 +29,7 @@ export class RemoveUserController {
         return res.status(403).json(responseMessage(403, error.message));
       }
      
+      console.log(error)
       return res.status(500).json(responseMessage(500, "Server internal error"));
     }
   }

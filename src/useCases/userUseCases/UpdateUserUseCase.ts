@@ -10,7 +10,7 @@ import { IncorrectPasswordError } from "../loginUseCase/errors/IncorrectPassword
 export default class UpdateUserUseCase {
   constructor(private userRepo: IUserRepository) {}
 
-  async execute(toModify: IUserDTO, id: string, inputedPassword: string): Promise<IUserDTO> {
+  async execute(toModify: Omit<IUserDTO, 'password'>, id: string, inputedPassword: string): Promise<IUserDTO> {
     const userExists = await this.userRepo.getById(id);
 
     if (!userExists) {
@@ -33,7 +33,7 @@ export default class UpdateUserUseCase {
       user.updateName(name);
     }
 
-    await this.userRepo.update(user);
+    await this.userRepo.update(id, user);
 
     return user.toObject();
   }

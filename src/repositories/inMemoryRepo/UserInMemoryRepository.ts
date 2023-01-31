@@ -9,8 +9,8 @@ export default class UserInMemoryRepository implements IUserRepository {
         await this.userList.push(user);
     }
 
-    async update(toUpdateUser: IUserDTO): Promise<void> {
-        const userIndex = this.userList.findIndex(user => user.id === toUpdateUser.id);
+    async update(id: string, toUpdateUser: IUserDTO): Promise<void> {
+        const userIndex = this.userList.findIndex(user => user.id === id);
         await this.userList.splice(userIndex, 1, toUpdateUser);
     }
 
@@ -19,12 +19,24 @@ export default class UserInMemoryRepository implements IUserRepository {
         await this.userList.splice(userIndex, 1);
     }
      
-    async getById(id: string): Promise<IUserDTO | undefined> {
-        return await this.userList.find(user => user.id === id);
+    async getById(id: string): Promise<IUserDTO | null> {
+        const findedUser = await this.userList.find(user => user.id === id);
+
+        if (!findedUser) {
+            return null;
+        }
+
+        return findedUser;
     }
     
-    async getByEmail(email: string): Promise<IUserDTO | undefined> {
-        return await this.userList.find(user => user.email === email);
+    async getByEmail(email: string): Promise<IUserDTO | null> {
+        const findedUser = await this.userList.find(user => user.email === email);
+
+        if (!findedUser) {
+            return null;
+        }
+
+        return findedUser;
     }
 
     async listAll(): Promise<IUserDTO[]> {

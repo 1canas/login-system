@@ -2,6 +2,7 @@ import { ISecurityProvider } from "../../providers/securityProvider/ISecurityPro
 import IUserRepository from "../../repositories/IUserRepository";
 import { UserNotFoundError } from "../../errors/UserNotFoundError";
 import { IncorrectPasswordError } from "./errors/IncorrectPasswordError";
+import User from "../../entities/User";
 
 export class LoginUseCase {
   constructor(
@@ -10,11 +11,13 @@ export class LoginUseCase {
   ) {}
 
   async execute(email: string, password: string) {
-    const user = await this.userRepo.getByEmail(email);
+    const userExists = await this.userRepo.getByEmail(email);
 
-    if (!user) {
+    if (!userExists) {
       throw new UserNotFoundError("User not found");
     }
+
+    const user = new User({...userExists, password});
 
     if (!user.comparePassword(password)) {
       throw new IncorrectPasswordError("Incorrect Password");

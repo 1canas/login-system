@@ -11,7 +11,7 @@ describe("user in memory repository", () => {
       password: "teste102030",
     };
 
-    const user = new User(userProps);
+    const user = new User(userProps).toObject();
 
     inMemoryRepo.save(user);
 
@@ -28,7 +28,7 @@ describe("user in memory repository", () => {
       password: "teste102030",
     };
 
-    const user = new User(userProps);
+    const user = new User(userProps).toObject();
 
     inMemoryRepo.save(user);
 

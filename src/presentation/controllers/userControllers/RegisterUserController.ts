@@ -33,6 +33,8 @@ export class RegisterUserController {
         return res.status(422).json(responseMessage(422, error.message));
       }
 
+      console.log(error)
+
       return res.status(500).json(responseMessage(500, "Server internal error"));
     }
   }

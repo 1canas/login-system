@@ -27,7 +27,7 @@ export default class RegisterUserUseCase {
             throw new UserAlreadyExistError("A user with this email already exists");
         }
 
-        const user = new User(userDTO);
+        const user = new User(userDTO).toObject();
 
         await this.userRepo.save(user);
 
@@ -46,7 +46,7 @@ export default class RegisterUserUseCase {
             })
         }
 
-        return user.toObject();
+        return user;
     }
 
     public async checkUserExistence(email: string): Promise<boolean> {

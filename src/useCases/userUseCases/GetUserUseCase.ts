@@ -14,6 +14,6 @@ export default class GetUserUseCase {
             throw new UserNotFoundError('User not found');
         }
 
-        return user.toObject();
+        return user;
     }
 }

@@ -10,7 +10,7 @@ export class UpdateUserController {
     const { id, name, email, password } = req.body;
 
     try {
-      const updateUser = await this.updateUserUseCase.execute({ name, email, password }, id);
+      const updateUser = await this.updateUserUseCase.execute({ name, email }, id, password);
 
       return res.status(200).json({
         ...responseMessage(200, "Success on update user"),

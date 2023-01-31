@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { userRepo } from "../repositories/inMemoryRepo/index";
+import { userRepo } from "../repositories/index";
 import { NodemailerProvider } from "../providers/mailProvider/nodemailer/NodemailerProvider";
 
 import RegisterUserUseCase from "../useCases/userUseCases/RegisterUserUseCase";
