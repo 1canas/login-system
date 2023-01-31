@@ -25,10 +25,10 @@ describe('update user usecase', () => {
         const updateUserDTO: IUserDTO = {
             email: "teste236@test.com",
             name: "teste123",
-            password: "teste102030",
+            password: "qaaaaaaaaaaaaaaaaa"
         };
 
-        const updatedUser = await updateUserService.execute(updateUserDTO, id);
+        const updatedUser = await updateUserService.execute(updateUserDTO, id, registerUserDTO.password);
 
         expect(inMemoryRepo.userList).toHaveLength(1);
         expect(updatedUser).toStrictEqual({...updateUserDTO, password: updatedUser.password, id});

@@ -22,7 +22,7 @@ describe('remove user usecase', () => {
 
         const removeUserService = new RemoveUserUseCase(inMemoryRepo);
 
-        await removeUserService.execute(savedUser.id, registerUserDTO.password, registerUserDTO.confirmPassword);
+        await removeUserService.execute(savedUser.id, registerUserDTO.password);
 
         expect(inMemoryRepo.userList).toHaveLength(0);
     });
